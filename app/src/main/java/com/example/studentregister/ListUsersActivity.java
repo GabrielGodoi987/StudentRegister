@@ -1,6 +1,5 @@
 package com.example.studentregister;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
@@ -22,7 +21,6 @@ public class ListUsersActivity extends AppCompatActivity {
     private RecyclerView rvUsers;
     private UserAdapter adapter;
     private UsersService usersService;
-
     private Button btnVoltar;
 
     @Override
@@ -31,47 +29,69 @@ public class ListUsersActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_list_users);
 
-        rvUsers = findViewById(R.id.rvUsers);
         usersService = UsersService.getInstance();
 
-        goBack();
+        rvUsers = findViewById(R.id.rvUsers);
+        btnVoltar = findViewById(R.id.btnVoltar);
+
         setupRecyclerView();
+        setupActions();
     }
 
     private void setupRecyclerView() {
-        List<Student> students = usersService.findAll();
-
-        adapter = new UserAdapter(students, new UserAdapter.OnUserActionListener() {
-            @Override
-            public void onEdit(Student student) {
-                Intent intent = new Intent(ListUsersActivity.this, RegisterStudentActivity.class);
-                intent.putExtra("STUDENT_ID", student.getId());
-                startActivity(intent);
-            }
-
-            @Override
-            public void onDelete(Student student) {
-                usersService.delete(student.getId());
-                adapter.updateList(usersService.findAll());
-                Toast.makeText(ListUsersActivity.this, "Aluno removido", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         rvUsers.setLayoutManager(new LinearLayoutManager(this));
+
+        adapter = new UserAdapter(
+                usersService.findAll(),
+                new UserAdapter.OnUserActionListener() {
+
+                    @Override
+                    public void onEdit(Student student) {
+
+                        if (student.getId() == null) {
+                            Toast.makeText(
+                                    ListUsersActivity.this,
+                                    "Aluno sem ID, não é possível editar",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                            return;
+                        }
+
+                        AppNavigator.goToWithParams(
+                                ListUsersActivity.this,
+                                RegisterStudentActivity.class,
+                                "STUDENT_ID",
+                                student.getId()
+                        );
+                    }
+
+                    @Override
+                    public void onDelete(Student student) {
+                        usersService.delete(student.getId());
+                        adapter.updateList(usersService.findAll());
+
+                        Toast.makeText(
+                                ListUsersActivity.this,
+                                "Aluno removido",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                }
+        );
+
         rvUsers.setAdapter(adapter);
+    }
+
+    private void setupActions() {
+        btnVoltar.setOnClickListener(v -> finish());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.updateList(usersService.findAll());
-    }
 
-    private void goBack(){
-        btnVoltar = findViewById(R.id.btnVoltar);
-
-        btnVoltar.setOnClickListener(action -> {
-            AppNavigator.goTo(ListUsersActivity.this, MainActivity.class);
-        });
+        if (adapter != null) {
+            adapter.updateList(usersService.findAll());
+        }
     }
 }

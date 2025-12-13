@@ -4,7 +4,6 @@ import com.example.studentregister.data.entities.Student;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class UsersService {
     private static UsersService instance;
@@ -35,10 +34,15 @@ public class UsersService {
         return new ArrayList<>(students);
     }
 
-    public Optional<Student> findById(Integer id) {
-        return students.stream()
-                .filter(student -> student.getId().equals(id))
-                .findFirst();
+
+
+    public Student findById(Integer id) {
+        for (Student student : students) {
+            if (student.getId().equals(id)) {
+                return student;
+            }
+        }
+        return null;
     }
 
 

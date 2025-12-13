@@ -11,7 +11,7 @@ public class AppNavigator {
         context.startActivity(intent);
     }
 
-    public static void goToWithParams(Context context, Class<?> destination, String key, Long value) {
+    public static void goToWithParams(Context context, Class<?> destination, String key, Integer value) {
         if (value <= 0L) {
             Toast.makeText(context, "O id não pode ser um valor negativo ou igual a zero", Toast.LENGTH_SHORT).show();
             return;

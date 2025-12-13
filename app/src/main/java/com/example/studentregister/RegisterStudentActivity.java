@@ -23,14 +23,20 @@ public class RegisterStudentActivity extends AppCompatActivity {
 
     private Button btnSalvar, btnVoltar;
 
+    private UsersService usersService;
+
+    private Integer studentId = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_student);
 
+        this.usersService = UsersService.getInstance();
         goBack();
         initViews();
         initActions();
+        checkEditMode();
     }
 
     private void initViews() {
@@ -46,11 +52,43 @@ public class RegisterStudentActivity extends AppCompatActivity {
         btnSalvar = findViewById(R.id.btnSalvar);
     }
 
-    private void initActions() {
-        btnSalvar.setOnClickListener(v -> salvarAluno());
+    private void checkEditMode() {
+        if (getIntent().hasExtra("STUDENT_ID")) {
+            studentId = getIntent().getIntExtra("STUDENT_ID", -1);
+
+            Student student = usersService.findById(studentId);
+
+            if (student != null) {
+                fillForm(student);
+            }
+        }
     }
 
-    private void salvarAluno() {
+    private void fillForm(Student student) {
+        edtNome.setText(student.getName());
+        edtCpf.setText(student.getCpf());
+        edtNacionalidade.setText(student.getNationality());
+        edtNaturalidade.setText(student.getNaturality());
+        edtNumeroDocumento.setText(student.getDocumentNumber());
+
+        if (student.getSex() == SexEnum.MALE) {
+            rgSexo.check(R.id.rbMasculino);
+        } else if (student.getSex() == SexEnum.FEMALE) {
+            rgSexo.check(R.id.rbFeminino);
+        }
+
+        if ("RG".equalsIgnoreCase(student.getDocumentName())) {
+            rgDocumento.check(R.id.rbRG);
+        } else if ("CIN".equalsIgnoreCase(student.getDocumentName())) {
+            rgDocumento.check(R.id.rbCIN);
+        }
+    }
+
+    private void initActions() {
+        btnSalvar.setOnClickListener(v -> sveStudent());
+    }
+
+    private void sveStudent() {
 
         if (!camposValidos()) {
             Toast.makeText(this, "Preencha todos os campos obrigatórios", Toast.LENGTH_SHORT).show();
@@ -69,7 +107,7 @@ public class RegisterStudentActivity extends AppCompatActivity {
         Address address = new Address("", "", "");
 
         Student student = new Student(
-                null,
+                studentId,
                 nome,
                 cpf,
                 sexo,
@@ -80,9 +118,14 @@ public class RegisterStudentActivity extends AppCompatActivity {
                 address
         );
 
-        UsersService.getInstance().create(student);
+        if (studentId == null) {
+            UsersService.getInstance().create(student);
+            Toast.makeText(this, "Aluno cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
+        } else {
+            UsersService.getInstance().update(student);
+            Toast.makeText(this, "Aluno atualizado com sucesso!", Toast.LENGTH_SHORT).show();
+        }
 
-        Toast.makeText(this, "Aluno cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
         finish();
     }
 
