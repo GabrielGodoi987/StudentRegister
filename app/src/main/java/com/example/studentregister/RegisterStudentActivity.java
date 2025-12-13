@@ -13,6 +13,7 @@ import com.example.studentregister.data.entities.Address;
 import com.example.studentregister.data.entities.Student;
 import com.example.studentregister.data.entities.enums.SexEnum;
 import com.example.studentregister.data.services.UsersService;
+import com.example.studentregister.utils.AppNavigator;
 
 public class RegisterStudentActivity extends AppCompatActivity {
 
@@ -20,13 +21,14 @@ public class RegisterStudentActivity extends AppCompatActivity {
 
     private RadioGroup rgSexo, rgDocumento;
 
-    private Button btnSalvar;
+    private Button btnSalvar, btnVoltar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_student);
 
+        goBack();
         initViews();
         initActions();
     }
@@ -107,5 +109,13 @@ public class RegisterStudentActivity extends AppCompatActivity {
         int selectedId = rgDocumento.getCheckedRadioButtonId();
         RadioButton selected = findViewById(selectedId);
         return selected.getText().toString();
+    }
+
+    private void goBack(){
+        btnVoltar = findViewById(R.id.btnVoltar);
+
+        btnVoltar.setOnClickListener(action -> {
+            AppNavigator.goTo(RegisterStudentActivity.this, MainActivity.class);
+        });
     }
 }

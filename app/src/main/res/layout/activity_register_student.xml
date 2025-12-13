@@ -137,15 +137,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rgDocumento" />
 
+
     <Button
         android:id="@+id/btnSalvar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="67dp"
+        android:layout_marginTop="36dp"
         android:text="Salvar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtNumeroDocumento" />
+
+    <Button
+        android:id="@+id/btnVoltar"
+        android:layout_width="381dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:text="Voltar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnSalvar" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
