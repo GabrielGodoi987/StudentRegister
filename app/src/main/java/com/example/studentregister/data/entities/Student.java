@@ -14,6 +14,8 @@ public class Student {
     private String documentName;
     private String documentNumber;
     private Address address;
+    private ContactData contactData;
+    private UnitData unitData;
 
 
     public Student(
@@ -37,6 +39,33 @@ public class Student {
         this.documentNumber = documentNumber;
         this.address = address;
     }
+
+    public Student(
+            Integer id,
+            String name,
+            String cpf,
+            SexEnum sex,
+            String nationality,
+            String naturality,
+            String documentName,
+            String documentNumber,
+            Address address,
+            ContactData contactData,
+            UnitData unitData
+    ) {
+        this.id = id;
+        this.name = name;
+        this.cpf = cpf;
+        this.sex = sex;
+        this.nationality = nationality;
+        this.naturality = naturality;
+        this.documentName = documentName;
+        this.documentNumber = documentNumber;
+        this.address = address;
+        this.contactData = contactData;
+        this.unitData = unitData;
+    }
+
 
     public Integer getId() {
         return id;
@@ -108,6 +137,22 @@ public class Student {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public ContactData getContactData() {
+        return contactData;
+    }
+
+    public void setContactData(ContactData contactData) {
+        this.contactData = contactData;
+    }
+
+    public UnitData getUnitData() {
+        return unitData;
+    }
+
+    public void setUnitData(UnitData unitData) {
+        this.unitData = unitData;
     }
 
     @Override
