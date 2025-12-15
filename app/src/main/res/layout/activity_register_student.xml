@@ -22,7 +22,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- ================= DADOS PESSOAIS ================= -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -99,7 +98,6 @@
                 android:layout_height="wrap_content"
                 android:hint="Número do documento"/>
 
-            <!-- ================= DADOS DE CONTATO ================= -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -155,7 +153,6 @@
                 android:layout_height="wrap_content"
                 android:hint="Telefone de emergência"/>
 
-            <!-- ================= ENDEREÇO ================= -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -217,7 +214,6 @@
                 android:layout_height="wrap_content"
                 android:hint="País"/>
 
-            <!-- ================= DADOS DA UNIDADE ================= -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -267,7 +263,6 @@
                 android:layout_height="wrap_content"
                 android:hint="Semestre/Ano de ingresso"/>
 
-            <!-- ================= BOTÕES ================= -->
             <Button
                 android:id="@+id/btnSalvar"
                 android:layout_width="match_parent"
