@@ -97,24 +97,24 @@ public class RegisterStudentActivity extends AppCompatActivity {
 
         String nome = edtNome.getText().toString();
         String cpf = edtCpf.getText().toString();
-        String nacionalidade = edtNacionalidade.getText().toString();
-        String naturalidade = edtNaturalidade.getText().toString();
-        String numeroDocumento = edtNumeroDocumento.getText().toString();
+        String nationality = edtNacionalidade.getText().toString();
+        String birthDate = edtNaturalidade.getText().toString();
+        String documentName = edtNumeroDocumento.getText().toString();
 
         SexEnum sexo = obterSexoSelecionado();
         String tipoDocumento = obterTipoDocumentoSelecionado();
 
-        Address address = new Address("", "", "");
+        Address address = new Address("", "", "", "", "", "", "", "", "");
 
         Student student = new Student(
                 studentId,
                 nome,
                 cpf,
                 sexo,
-                nacionalidade,
-                naturalidade,
+                nationality,
+                birthDate,
                 tipoDocumento,
-                numeroDocumento,
+                documentName,
                 address
         );
 
